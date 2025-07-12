@@ -15,24 +15,9 @@ module.exports = {
 			directory: path.resolve(__dirname, 'dist')
 		},
 		open: true,
-		port: 3001,
+		port: 9000,
 		historyApiFallback: true
 	},
-	plugins: [
-		new ModuleFederationPlugin({
-			name: 'details',
-			filename: 'remoteEntry.js',
-			exposes: {
-				'./DetailsPage': './src/components/DetailsContent/DetailsContent.jsx'
-			},
-			shared: ['react', 'react-dom']
-		}),
-		new MiniCssExtractPlugin(),
-		new HtmlWebpackPlugin({
-			template: './src/index.html',
-			filename: 'index.html'
-		})
-	],
 	module: {
 		rules: [
 			{
@@ -70,14 +55,33 @@ module.exports = {
 				]
 			},
 			{
-				test: /\.(jpg|jpeg|png|svg|gif)$/,
+				test: /\.(png|jpeg|gif|jpg)$/i,
 				type: 'asset/resource'
+			},
+			{
+				test: /\.webp$/i,
+				use: ['file-loader', 'webp-loader']
 			}
 		]
 	},
+	plugins: [
+		new ModuleFederationPlugin({
+			name: 'movieApp',
+			filename: 'remoteEntry.js',
+			remotes: {
+				homepage: 'home@http://localhost:3000/remoteEntry.js'
+			},
+			shared: ['react', 'react-dom']
+		}),
+		new MiniCssExtractPlugin(),
+		new HtmlWebpackPlugin({
+			template: './src/index.html',
+			filename: 'index.html'
+		})
+	],
 	optimization: {
 		splitChunks: {
-			chunks: 'async'
+			chunks: 'all'
 		}
 	}
 };
