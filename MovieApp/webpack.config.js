@@ -69,7 +69,9 @@ module.exports = {
 			name: 'movieApp',
 			filename: 'remoteEntry.js',
 			remotes: {
-				homepage: 'home@http://localhost:3000/remoteEntry.js'
+				homepage: 'home@http://localhost:3000/remoteEntry.js',
+				details: 'details@http://localhost:3001/remoteEntry.js',
+				seatSelection: 'seatselection@http://localhost:3003/remoteEntry.js'
 			},
 			shared: ['react', 'react-dom']
 		}),

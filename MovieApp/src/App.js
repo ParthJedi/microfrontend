@@ -1,18 +1,22 @@
 import React, { Suspense } from 'react';
 import './App.scss';
 import { Switch, Route } from 'react-router-dom';
-import DetailsPage from './components/DetailsPage/DetailsPage.jsx';
-import BookPage from './components/BookPage/BookPage.jsx';
 const Homepage = React.lazy(() => import('homepage/HomePage'));
+const DetailsPage = React.lazy(() => import('details/DetailsPage'));
+const BookPage = React.lazy(() => import('seatSelection/SeatSelection'));
 
 const App = () => {
 	return (
 		<Switch>
 			<Route path='/details'>
-				<DetailsPage></DetailsPage>
+				<Suspense fallback={null}>
+					<DetailsPage></DetailsPage>
+				</Suspense>
 			</Route>
 			<Route path='/book'>
-				<BookPage></BookPage>
+				<Suspense fallback={null}>
+					<BookPage></BookPage>
+				</Suspense>
 			</Route>
 			<Route path='/'>
 				<Suspense fallback={null}>
